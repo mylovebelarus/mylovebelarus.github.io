@@ -667,14 +667,7 @@ section{
 .wheel-1{left:42px}
 .wheel-2{right:42px}
 
-.tram.run{
-  animation:tramRide 4s ease-in-out 1;
-}
 
-@keyframes tramRide{
-  0%{left:-330px}
-  100%{left:calc(100% + 330px)}
-}
 
 /* navigation */
 
@@ -1149,6 +1142,167 @@ footer{
   opacity:1;
   transform:none;
 }
+
+/* =========================
+   FULLSCREEN IMAGE VIEWER
+========================= */
+.image-lightbox{
+  position:fixed;
+  inset:0;
+  z-index:9999;
+  display:none;
+  align-items:center;
+  justify-content:center;
+  padding:24px;
+  background:rgba(0,0,0,.88);
+  backdrop-filter:blur(6px);
+}
+.image-lightbox.open{display:flex}
+.image-lightbox img{
+  display:block;
+  max-width:95vw;
+  max-height:92vh;
+  width:auto;
+  height:auto;
+  object-fit:contain;
+  border-radius:14px;
+  box-shadow:0 25px 80px rgba(0,0,0,.45);
+}
+.lightbox-close{
+  position:absolute;
+  top:18px;
+  right:22px;
+  width:48px;
+  height:48px;
+  border:0;
+  border-radius:50%;
+  background:rgba(255,255,255,.14);
+  color:#fff;
+  font-size:34px;
+  line-height:1;
+  cursor:pointer;
+  z-index:2;
+}
+.lightbox-close:hover{background:rgba(255,255,255,.25)}
+.fullscreen-click{
+  cursor:zoom-in;
+}
+.fullscreen-click:hover{
+  filter:brightness(1.04);
+}
+.souvenir-gallery{
+  position:absolute;
+  inset:80px 35px 35px;
+  display:none;
+  grid-template-columns:repeat(4,1fr);
+  gap:16px;
+  align-items:center;
+  z-index:10;
+}
+.city-scene.souvenir-mode .souvenir-gallery{
+  display:grid;
+}
+.souvenir-item{
+  height:260px;
+  padding:12px;
+  border-radius:18px;
+  background:rgba(255,255,255,.96);
+  box-shadow:0 15px 35px rgba(0,0,0,.22);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+}
+.souvenir-item img{
+  width:100%;
+  height:100%;
+  object-fit:contain;
+  border-radius:10px;
+}
+.navigation-gallery{
+  position:absolute;
+  inset:80px 60px 45px;
+  display:none;
+  grid-template-columns:1fr 1fr;
+  gap:24px;
+  align-items:center;
+  z-index:10;
+}
+.city-scene.navigation-mode .navigation-gallery{
+  display:grid;
+}
+.navigation-item{
+  height:285px;
+  padding:12px;
+  border-radius:18px;
+  background:rgba(255,255,255,.96);
+  box-shadow:0 15px 35px rgba(0,0,0,.22);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+}
+.navigation-item img{
+  width:100%;
+  height:100%;
+  object-fit:contain;
+  border-radius:10px;
+}
+.transport-image{
+  position:absolute;
+  left:50%;
+  bottom:30px;
+  transform:translateX(-50%);
+  width:min(75%,720px);
+  max-height:270px;
+  object-fit:contain;
+  display:none;
+  z-index:10;
+  cursor:zoom-in;
+  filter:drop-shadow(0 18px 25px rgba(0,0,0,.25));
+}
+.city-scene.transport-mode .transport-image{
+  display:block;
+}
+.city-scene.transport-mode .tram{
+  display:none;
+}
+.city-scene.street-mode .street-image{
+  display:block;
+}
+.street-image{
+  position:absolute;
+  inset:0;
+  width:100%;
+  height:100%;
+  object-fit:contain;
+  display:none;
+  z-index:9;
+  background:rgba(255,255,255,.04);
+  cursor:zoom-in;
+}
+.city-scene.street-mode .street-image{
+  display:block;
+}
+.city-scene.street-mode > .city-buildings{
+  display:none;
+}
+@media(max-width:760px){
+  .souvenir-gallery{
+    inset:72px 12px 18px;
+    grid-template-columns:repeat(2,1fr);
+    gap:10px;
+  }
+  .souvenir-item{height:145px;padding:7px}
+  .navigation-gallery{
+    inset:75px 14px 25px;
+    gap:10px;
+  }
+  .navigation-item{height:220px;padding:7px}
+  .transport-image{
+    width:92%;
+    max-height:230px;
+  }
+}
+
 </style>
 </head>
 
@@ -1312,63 +1466,63 @@ footer{
 
     <!-- scene -->
 
-    <div class="city-scene" id="cityScene">
-        <img src="img/minsk33.png" alt="">
+    <div class="city-scene street-mode" id="cityScene">
 
       <div class="scene-label">
         <span id="sceneCity">Минск</span>
         <small id="sceneMode">Городская среда</small>
       </div>
-      <div class="city-buildings">
-        <img src="img/minsk3.png" alt="">
 
+      <!-- Улица: клик по изображению открывает его на весь экран -->
+      <img
+        class="street-image fullscreen-click"
+        src="img/minsk3.png"
+        alt="Минск — городская среда"
+        data-fullscreen="img/minsk3.png"
+      >
+
+      <!-- Транспорт: без анимации, клик открывает изображение на весь экран -->
+      <img
+        class="transport-image fullscreen-click"
+        src="img/tramvay.png"
+        alt="Минский трамвай"
+        data-fullscreen="img/tramvay.png"
+      >
+
+      <!-- Навигация -->
+      <div class="navigation-gallery">
+        <div class="navigation-item">
+          <img
+            class="fullscreen-click"
+            src="img/ukazatelCity.png"
+            alt="Указатель города"
+            data-fullscreen="img/ukazatelCity.png"
+          >
+        </div>
+        <div class="navigation-item">
+          <img
+            class="fullscreen-click"
+            src="img/ukazatelLake.png"
+            alt="Указатель к озеру"
+            data-fullscreen="img/ukazatelLake.png"
+          >
+        </div>
       </div>
 
-      <div class="sidewalk"></div>
-      <div class="road"></div>
-
-
-      <!-- tram -->
-
-      <div class="tram" id="tram">
-        <img src="img/tram22222.png" alt="">
-
-        <div class="tram-window">
-
+      <!-- Сувениры -->
+      <div class="souvenir-gallery">
+        <div class="souvenir-item">
+          <img class="fullscreen-click" src="img/kruska.png" alt="Сувенир — кружка" data-fullscreen="img/kruska.png">
         </div>
-
-        <div class="tram-brand">
-          БЕЛАРУСЬ • БЛІЗКА ДА СЭРЦА
+        <div class="souvenir-item">
+          <img class="fullscreen-click" src="img/ostanovka.png" alt="Сувенир — остановка" data-fullscreen="img/ostanovka.png">
         </div>
-
-
-      </div>
-
-
-      <!-- navigation -->
-
-      <div class="navigation-signs">
-
-        <div class="sign">
-          ← ЦЕНТР &nbsp;&nbsp; ОЗЕРО →
+        <div class="souvenir-item">
+          <img class="fullscreen-click" src="img/telefon.png" alt="Сувенир — телефон" data-fullscreen="img/telefon.png">
         </div>
-
-      </div>
-
-
-      <!-- souvenir -->
-
-      <div class="souvenir">
-        <img
-          class="souvenir-logo"
-          src="img/logo-square.png"
-          alt=""
-        >
-
-        <div class="souvenir-text">
-          БЛІЗКА ДА СЭРЦА
+        <div class="souvenir-item">
+          <img class="fullscreen-click" src="img/book.png" alt="Сувенир — книга" data-fullscreen="img/book.png">
         </div>
-
       </div>
 
     </div>
@@ -1749,6 +1903,13 @@ footer{
 </footer>
 
 
+
+<!-- Полноэкранный просмотр изображений -->
+<div class="image-lightbox" id="imageLightbox" aria-hidden="true">
+  <button class="lightbox-close" id="lightboxClose" type="button" aria-label="Закрыть">×</button>
+  <img id="lightboxImage" src="" alt="">
+</div>
+
 <script>
 
 /* =========================
@@ -1781,7 +1942,6 @@ cityButtons.forEach(button => {
 
 const modeButtons = document.querySelectorAll('.mode-btn');
 const scene = document.getElementById('cityScene');
-const tram = document.getElementById('tram');
 const sceneMode = document.getElementById('sceneMode');
 
 const modeNames = {
@@ -1792,61 +1952,70 @@ const modeNames = {
 };
 
 modeButtons.forEach(button => {
-
   button.addEventListener('click', () => {
 
-    modeButtons.forEach(item => {
-      item.classList.remove('active');
-    });
-
+    modeButtons.forEach(item => item.classList.remove('active'));
     button.classList.add('active');
 
     const mode = button.dataset.mode;
 
     scene.classList.remove(
+      'street-mode',
+      'transport-mode',
       'navigation-mode',
       'souvenir-mode'
     );
 
+    scene.classList.add(mode + '-mode');
     sceneMode.textContent = modeNames[mode];
-
-
-    /* transport */
-
-    if(mode === 'transport'){
-
-      tram.classList.remove('run');
-
-      void tram.offsetWidth;
-
-      tram.classList.add('run');
-
-    }else{
-
-      tram.classList.remove('run');
-
-    }
-
-
-    /* navigation */
-
-    if(mode === 'navigation'){
-
-      scene.classList.add('navigation-mode');
-
-    }
-
-
-    /* souvenir */
-
-    if(mode === 'souvenir'){
-
-      scene.classList.add('souvenir-mode');
-
-    }
-
   });
+});
 
+
+/* =========================
+   FULLSCREEN IMAGE VIEWER
+========================= */
+
+const lightbox = document.getElementById('imageLightbox');
+const lightboxImage = document.getElementById('lightboxImage');
+const lightboxClose = document.getElementById('lightboxClose');
+
+function openLightbox(src, alt = '') {
+  lightboxImage.src = src;
+  lightboxImage.alt = alt;
+  lightbox.classList.add('open');
+  lightbox.setAttribute('aria-hidden', 'false');
+  document.body.style.overflow = 'hidden';
+}
+
+function closeLightbox() {
+  lightbox.classList.remove('open');
+  lightbox.setAttribute('aria-hidden', 'true');
+  lightboxImage.src = '';
+  document.body.style.overflow = '';
+}
+
+document.querySelectorAll('.fullscreen-click').forEach(image => {
+  image.addEventListener('click', () => {
+    openLightbox(
+      image.dataset.fullscreen || image.currentSrc || image.src,
+      image.alt
+    );
+  });
+});
+
+lightboxClose.addEventListener('click', closeLightbox);
+
+lightbox.addEventListener('click', event => {
+  if (event.target === lightbox) {
+    closeLightbox();
+  }
+});
+
+document.addEventListener('keydown', event => {
+  if (event.key === 'Escape' && lightbox.classList.contains('open')) {
+    closeLightbox();
+  }
 });
 
 
