@@ -667,8 +667,6 @@ section{
 .wheel-1{left:42px}
 .wheel-2{right:42px}
 
-
-
 /* navigation */
 
 .sign{
@@ -835,28 +833,39 @@ section{
   box-shadow:0 12px 35px rgba(9,43,67,.08);
 }
 
+/* ИСПРАВЛЕНО:
+   изображение теперь всегда находится внутри карточки */
 .photo-image{
   width:100%;
   height:100%;
   min-height:340px;
-  object-fit:cover;
+  object-fit:contain;
+  object-position:center;
   display:block;
 }
 
+/* Контейнер фотографии */
 .photo-placeholder{
+  width:100%;
   height:100%;
   min-height:340px;
   display:flex;
   align-items:center;
   justify-content:center;
-  text-align:center;
-  padding:30px;
-  background:
-    radial-gradient(circle at 20% 20%,rgba(8,119,209,.3),transparent 25%),
-    linear-gradient(135deg,#dff4ff,#cdebdc);
-  color:#537080;
-  font-size:13px;
-  font-weight:700;
+  overflow:hidden;
+  padding:0;
+  background:#d9e9e1;
+}
+
+/* Сама фотография */
+.photo-placeholder img{
+  display:block;
+  width:100%;
+  height:100%;
+  min-width:0;
+  min-height:0;
+  object-fit:contain;
+  object-position:center;
 }
 
 .brand-overlay{
@@ -899,9 +908,56 @@ section{
   opacity:.85;
 }
 
+/* =========================
+   МОБИЛЬНАЯ ВЕРСИЯ ФОТО
+========================= */
+
 @media(max-width:700px){
+
   .photo-grid{
     grid-template-columns:1fr;
+    gap:18px;
+  }
+
+  .photo-card{
+    min-height:0;
+    height:auto;
+    border-radius:20px;
+  }
+
+  .photo-placeholder{
+    min-height:0;
+    height:auto;
+    aspect-ratio:16 / 10;
+    padding:0;
+  }
+
+  .photo-placeholder img{
+    width:100%;
+    height:100%;
+    object-fit:contain;
+    object-position:center;
+  }
+
+  .brand-overlay img{
+    width:120px;
+    max-height:60px;
+    left:16px;
+    top:16px;
+  }
+
+  .photo-caption{
+    left:18px;
+    right:18px;
+    bottom:18px;
+  }
+
+  .photo-caption strong{
+    font-size:19px;
+  }
+
+  .photo-caption span{
+    font-size:11px;
   }
 }
 
@@ -1146,6 +1202,7 @@ footer{
 /* =========================
    FULLSCREEN IMAGE VIEWER
 ========================= */
+
 .image-lightbox{
   position:fixed;
   inset:0;
@@ -1157,7 +1214,11 @@ footer{
   background:rgba(0,0,0,.88);
   backdrop-filter:blur(6px);
 }
-.image-lightbox.open{display:flex}
+
+.image-lightbox.open{
+  display:flex;
+}
+
 .image-lightbox img{
   display:block;
   max-width:95vw;
@@ -1168,6 +1229,7 @@ footer{
   border-radius:14px;
   box-shadow:0 25px 80px rgba(0,0,0,.45);
 }
+
 .lightbox-close{
   position:absolute;
   top:18px;
@@ -1183,13 +1245,19 @@ footer{
   cursor:pointer;
   z-index:2;
 }
-.lightbox-close:hover{background:rgba(255,255,255,.25)}
+
+.lightbox-close:hover{
+  background:rgba(255,255,255,.25);
+}
+
 .fullscreen-click{
   cursor:zoom-in;
 }
+
 .fullscreen-click:hover{
   filter:brightness(1.04);
 }
+
 .souvenir-gallery{
   position:absolute;
   inset:80px 35px 35px;
@@ -1199,9 +1267,11 @@ footer{
   align-items:center;
   z-index:10;
 }
+
 .city-scene.souvenir-mode .souvenir-gallery{
   display:grid;
 }
+
 .souvenir-item{
   height:260px;
   padding:12px;
@@ -1213,6 +1283,7 @@ footer{
   align-items:center;
   justify-content:center;
 }
+
 .souvenir-item img{
   width:100%;
   height:100%;
@@ -1220,6 +1291,7 @@ footer{
   border-radius:10px;
   background:#123f5a;
 }
+
 .navigation-gallery{
   position:absolute;
   inset:80px 60px 45px;
@@ -1229,9 +1301,11 @@ footer{
   align-items:center;
   z-index:10;
 }
+
 .city-scene.navigation-mode .navigation-gallery{
   display:grid;
 }
+
 .navigation-item{
   height:285px;
   padding:12px;
@@ -1243,12 +1317,14 @@ footer{
   align-items:center;
   justify-content:center;
 }
+
 .navigation-item img{
   width:100%;
   height:100%;
   object-fit:contain;
   border-radius:10px;
 }
+
 .transport-image{
   position:absolute;
   left:50%;
@@ -1262,15 +1338,19 @@ footer{
   cursor:zoom-in;
   filter:drop-shadow(0 18px 25px rgba(0,0,0,.25));
 }
+
 .city-scene.transport-mode .transport-image{
   display:block;
 }
+
 .city-scene.transport-mode .tram{
   display:none;
 }
+
 .city-scene.street-mode .street-image{
   display:block;
 }
+
 .street-image{
   position:absolute;
   inset:0;
@@ -1282,32 +1362,46 @@ footer{
   background:#123f5a;
   cursor:zoom-in;
 }
+
 .city-scene.street-mode .street-image{
   display:block;
 }
+
 .city-scene.street-mode > .city-buildings{
   display:none;
 }
+
 @media(max-width:760px){
+
   .souvenir-gallery{
     inset:72px 12px 18px;
     grid-template-columns:repeat(2,1fr);
     gap:10px;
   }
-  .souvenir-item{height:145px;padding:7px}
+
+  .souvenir-item{
+    height:145px;
+    padding:7px;
+  }
+
   .navigation-gallery{
     inset:75px 14px 25px;
     gap:10px;
   }
-  .navigation-item{height:220px;padding:7px}
+
+  .navigation-item{
+    height:220px;
+    padding:7px;
+  }
+
   .transport-image{
     width:92%;
     max-height:230px;
   }
 }
 
-
 /* ===== Весёлый верхний блок: маршрут по Беларуси ===== */
+
 .hero{
   min-height:calc(100vh - 82px);
   background:
@@ -1405,8 +1499,18 @@ footer{
   font-weight:600;
 }
 
-.sticker-heart{top:12%;right:3%;transform:rotate(5deg)}
-.sticker-route{bottom:12%;left:2%;transform:rotate(-4deg);animation-delay:1s}
+.sticker-heart{
+  top:12%;
+  right:3%;
+  transform:rotate(5deg);
+}
+
+.sticker-route{
+  bottom:12%;
+  left:2%;
+  transform:rotate(-4deg);
+  animation-delay:1s;
+}
 
 @keyframes stickerFloat{
   0%,100%{translate:0 0}
@@ -1414,25 +1518,61 @@ footer{
 }
 
 @media(max-width:800px){
-  .hero-trip{justify-content:center}
-  .hero-sticker{display:none}
-  .hero-journey{left:12%;right:12%;bottom:18px}
+  .hero-trip{
+    justify-content:center;
+  }
+
+  .hero-sticker{
+    display:none;
+  }
+
+  .hero-journey{
+    left:12%;
+    right:12%;
+    bottom:18px;
+  }
 }
 
 </style>
 
 <style>
-.image-rights-note{max-width:900px;margin:70px auto 35px;padding:22px 28px;border-top:1px solid rgba(0,0,0,.12);color:rgba(0,0,0,.62);font-size:13px;line-height:1.65;text-align:center}
-.image-rights-note strong{display:block;margin-bottom:7px;color:rgba(0,0,0,.78);font-size:14px}
-@media(max-width:600px){.image-rights-note{margin:50px 18px 25px;padding:18px 12px;font-size:12px}}
+
+.image-rights-note{
+  max-width:900px;
+  margin:70px auto 35px;
+  padding:22px 28px;
+  border-top:1px solid rgba(0,0,0,.12);
+  color:rgba(0,0,0,.62);
+  font-size:13px;
+  line-height:1.65;
+  text-align:center;
+}
+
+.image-rights-note strong{
+  display:block;
+  margin-bottom:7px;
+  color:rgba(0,0,0,.78);
+  font-size:14px;
+}
+
+@media(max-width:600px){
+  .image-rights-note{
+    margin:50px 18px 25px;
+    padding:18px 12px;
+    font-size:12px;
+  }
+}
+
 </style>
 
-
 <style>
+
 /* Финальная настройка режимов «Транспорт» и «Навигация» */
+
 .city-scene.transport-mode{
   background:#123f5a !important;
 }
+
 .city-scene.transport-mode .transport-image{
   display:block !important;
   left:50%;
@@ -1451,6 +1591,7 @@ footer{
 .city-scene.navigation-mode{
   background:#123f5a !important;
 }
+
 .city-scene.navigation-mode .navigation-gallery{
   display:grid !important;
   position:absolute;
@@ -1460,6 +1601,7 @@ footer{
   align-items:stretch;
   z-index:20;
 }
+
 .city-scene.navigation-mode .navigation-item{
   min-width:0;
   height:auto;
@@ -1470,6 +1612,7 @@ footer{
   border-radius:18px;
   box-shadow:0 12px 30px rgba(0,0,0,.22);
 }
+
 .city-scene.navigation-mode .navigation-item img{
   width:100%;
   height:100%;
@@ -1485,20 +1628,24 @@ footer{
 }
 
 @media(max-width:760px){
+
   .city-scene.transport-mode .transport-image{
     width:96%;
     height:70%;
     max-height:260px;
   }
+
   .city-scene.navigation-mode .navigation-gallery{
     inset:72px 12px 20px;
     gap:10px;
   }
+
   .city-scene.navigation-mode .navigation-item{
     min-height:190px;
     padding:7px;
   }
 }
+
 </style>
 
 </head>
@@ -1510,22 +1657,30 @@ footer{
 ========================= -->
 
 <header>
+
   <nav class="nav">
 
     <a href="#top" class="logo-header">
+
       <img
         src="img/logo-horizontal.png"
         alt="БЕЛАРУСЬ — Блізка да сэрца"
       >
+
     </a>
 
     <div class="nav-links">
+
       <a href="#belarus">Открыть Беларусь</a>
+
       <a href="#brand">Бренд в городе</a>
+
       <a href="#about">О бренде</a>
+
     </div>
 
   </nav>
+
 </header>
 
 
@@ -1552,20 +1707,25 @@ footer{
       </div>
 
       <p class="hero-text">
+
         Беларусь — страна, которую хочется открывать снова.
         Леса и озёра, города и дороги, люди и впечатления
         объединяются в одном эмоциональном образе —
         <strong>близком к сердцу</strong>.
+
       </p>
 
       <div class="hero-trip" aria-label="Куда отправимся">
+
         <span>🌲 Природа</span>
         <span>🏙️ Города</span>
         <span>🚋 Движение</span>
         <span>🎁 Сувениры</span>
+
       </div>
 
       <div class="hero-buttons">
+
         <a href="#belarus" class="btn btn-primary">
           Открыть Беларусь →
         </a>
@@ -1573,6 +1733,7 @@ footer{
         <a href="#about" class="btn btn-light">
           О бренде
         </a>
+
       </div>
 
     </div>
@@ -1581,6 +1742,7 @@ footer{
     <div class="hero-logo-wrap reveal">
 
       <div class="hero-glow"></div>
+
       <div class="hero-circle"></div>
 
       <img
@@ -1603,6 +1765,7 @@ footer{
 <section id="belarus">
 
   <div class="section-inner">
+
     <div class="section-kicker">
       Открыть Беларусь
     </div>
@@ -1612,9 +1775,11 @@ footer{
     </h2>
 
     <p class="section-intro">
+
       Выбери город и посмотри, как единый туристический бренд
       может жить в городской среде — от улицы и транспорта
       до навигации и сувениров.
+
     </p>
 
 
@@ -1646,23 +1811,35 @@ footer{
     <div class="mode-tabs">
 
       <button class="mode-btn active" data-mode="street">
+
         Улица
+
         <span>Городская среда</span>
+
       </button>
 
       <button class="mode-btn" data-mode="transport">
+
         Транспорт
+
         <span>Движение города</span>
+
       </button>
 
       <button class="mode-btn" data-mode="navigation">
+
         Навигация
+
         <span>Путь к впечатлениям</span>
+
       </button>
 
       <button class="mode-btn" data-mode="souvenir">
+
         Сувенир
+
         <span>Бренд с собой</span>
+
       </button>
 
     </div>
@@ -1673,11 +1850,17 @@ footer{
     <div class="city-scene street-mode" id="cityScene">
 
       <div class="scene-label">
+
         <span id="sceneCity">Минск</span>
-        <small id="sceneMode">Городская среда</small>
+
+        <small id="sceneMode">
+          Городская среда
+        </small>
+
       </div>
 
       <!-- Улица -->
+
       <img
         id="streetImage"
         class="street-image fullscreen-click"
@@ -1687,6 +1870,7 @@ footer{
       >
 
       <!-- Транспорт -->
+
       <img
         id="transportImage"
         class="transport-image fullscreen-click"
@@ -1696,10 +1880,18 @@ footer{
       >
 
       <!-- Навигация -->
-      <div class="navigation-gallery" id="navigationGallery"></div>
+
+      <div
+        class="navigation-gallery"
+        id="navigationGallery"
+      ></div>
 
       <!-- Сувениры -->
-      <div class="souvenir-gallery" id="souvenirGallery"></div>
+
+      <div
+        class="souvenir-gallery"
+        id="souvenirGallery"
+      ></div>
 
     </div>
 
@@ -1721,26 +1913,36 @@ footer{
     </div>
 
     <h2 class="section-title">
+
       Один образ.<br>
+
       Много точек контакта.
+
     </h2>
 
     <p class="section-intro">
+
       Фирменный знак работает не только на экране.
       Он становится частью городской среды,
       транспорта, навигации и предметов,
       которые путешественник может взять с собой.
+
     </p>
 
 
     <div class="photo-grid">
 
-      <!-- Минск -->
+      <!-- Туризм -->
 
       <article class="photo-card">
 
         <div class="photo-placeholder">
-        <img src="img/tourist2.jpg" alt="">
+
+          <img
+            src="img/tourist2.jpg"
+            alt="Туризм"
+          >
+
         </div>
 
         <div class="brand-overlay">
@@ -1751,10 +1953,13 @@ footer{
           >
 
           <div class="photo-caption">
+
             <strong>Туризм</strong>
+
             <span>
               Бренд становится частью привычного туристического пространства.
             </span>
+
           </div>
 
         </div>
@@ -1762,12 +1967,17 @@ footer{
       </article>
 
 
-      <!-- транспорт -->
+      <!-- Транспорт -->
 
       <article class="photo-card">
 
         <div class="photo-placeholder">
-        <img src="img/tram2.jpg" alt="">
+
+          <img
+            src="img/tram2.jpg"
+            alt="Транспорт"
+          >
+
         </div>
 
         <div class="brand-overlay">
@@ -1778,10 +1988,13 @@ footer{
           >
 
           <div class="photo-caption">
+
             <strong>Транспорт</strong>
+
             <span>
               Беларусь движется вместе с путешественником.
             </span>
+
           </div>
 
         </div>
@@ -1789,25 +2002,34 @@ footer{
       </article>
 
 
-      <!-- улица -->
+      <!-- Навигация -->
 
       <article class="photo-card">
 
         <div class="photo-placeholder">
-        <img src="img/tourist.jpg" alt="">
+
+          <img
+            src="img/tourist.jpg"
+            alt="Навигация"
+          >
+
         </div>
 
         <div class="brand-overlay">
+
           <img
             src="img/logo-horizontal.png"
             alt=""
           >
 
           <div class="photo-caption">
+
             <strong>Навигация</strong>
+
             <span>
               Знак помогает найти путь к новым впечатлениям.
             </span>
+
           </div>
 
         </div>
@@ -1815,13 +2037,17 @@ footer{
       </article>
 
 
-      <!-- сувенир -->
+      <!-- Сувениры -->
 
       <article class="photo-card">
 
         <div class="photo-placeholder">
-        <img src="img/souvenir3.jpg" alt="">
-          
+
+          <img
+            src="img/souvenir3.jpg"
+            alt="Сувениры"
+          >
+
         </div>
 
         <div class="brand-overlay">
@@ -1832,10 +2058,13 @@ footer{
           >
 
           <div class="photo-caption">
+
             <strong>Сувениры</strong>
+
             <span>
               Эмоцию путешествия можно забрать с собой.
             </span>
+
           </div>
 
         </div>
@@ -1964,21 +2193,28 @@ footer{
         </div>
 
         <h2>
+
           БЕЛАРУСЬ —<br>
+
           <span>Блізка да сэрца</span>
+
         </h2>
 
         <p>
+
           В основе визуальной идеи — стилизованное сердце,
           которое объединяет эмоциональную связь человека
           со страной, природой и путешествием.
+
         </p>
 
         <p>
+
           Зелёный цвет передаёт природу, леса и жизнь.
           Синий связан с водой, озёрами, небом и движением.
           Вместе они создают современный образ Беларуси,
           не копируя буквально государственную символику.
+
         </p>
 
 
@@ -1989,11 +2225,13 @@ footer{
             <div class="value-dot"></div>
 
             <div>
+
               <strong>Природа</strong>
 
               <p>
                 Леса, поля, озёра и живое пространство страны.
               </p>
+
             </div>
 
           </div>
@@ -2004,11 +2242,13 @@ footer{
             <div class="value-dot"></div>
 
             <div>
+
               <strong>Движение</strong>
 
               <p>
                 Дорога, путешествие и открытие новых мест.
               </p>
+
             </div>
 
           </div>
@@ -2019,11 +2259,13 @@ footer{
             <div class="value-dot"></div>
 
             <div>
+
               <strong>Эмоция</strong>
 
               <p>
                 Беларусь как место, которое остаётся близким сердцу.
               </p>
+
             </div>
 
           </div>
@@ -2079,12 +2321,31 @@ footer{
 </footer>
 
 
-
 <!-- Полноэкранный просмотр изображений -->
-<div class="image-lightbox" id="imageLightbox" aria-hidden="true">
-  <button class="lightbox-close" id="lightboxClose" type="button" aria-label="Закрыть">×</button>
-  <img id="lightboxImage" src="" alt="">
+
+<div
+  class="image-lightbox"
+  id="imageLightbox"
+  aria-hidden="true"
+>
+
+  <button
+    class="lightbox-close"
+    id="lightboxClose"
+    type="button"
+    aria-label="Закрыть"
+  >
+    ×
+  </button>
+
+  <img
+    id="lightboxImage"
+    src=""
+    alt=""
+  >
+
 </div>
+
 
 <script>
 
@@ -2092,130 +2353,334 @@ footer{
    CITY SWITCH
 ========================= */
 
-const cityButtons = document.querySelectorAll('.city-btn');
-const sceneCity = document.getElementById('sceneCity');
-const streetImage = document.getElementById('streetImage');
-const transportImage = document.getElementById('transportImage');
-const navigationGallery = document.getElementById('navigationGallery');
-const souvenirGallery = document.getElementById('souvenirGallery');
+const cityButtons =
+  document.querySelectorAll('.city-btn');
+
+const sceneCity =
+  document.getElementById('sceneCity');
+
+const streetImage =
+  document.getElementById('streetImage');
+
+const transportImage =
+  document.getElementById('transportImage');
+
+const navigationGallery =
+  document.getElementById('navigationGallery');
+
+const souvenirGallery =
+  document.getElementById('souvenirGallery');
+
 
 /* Все изображения городов, которые лежат в папке img */
+
 const cityData = {
+
   'Минск': {
+
     street: 'img/minsk3.png',
-    streetAlt: 'Минск — городская среда',
-    transport: 'img/tramvay.png',
-    transportAlt: 'Минский транспорт',
+
+    streetAlt:
+      'Минск — городская среда',
+
+    transport:
+      'img/tramvay.png',
+
+    transportAlt:
+      'Минский транспорт',
+
     navigation: [
-      ['img/ukazatelCity.png', 'Указатель города'],
-      ['img/ukazatelLake.png', 'Указатель к озеру']
+
+      [
+        'img/ukazatelCity.png',
+        'Указатель города'
+      ],
+
+      [
+        'img/ukazatelLake.png',
+        'Указатель к озеру'
+      ]
+
     ],
+
     souvenirs: [
-      ['img/kruska.png', 'Сувенир — кружка'],
-      ['img/ostanovka.png', 'Сувенир — остановка'],
-      ['img/telefon.png', 'Сувенир — телефон'],
-      ['img/book.png', 'Сувенир — книга']
+
+      [
+        'img/kruska.png',
+        'Сувенир — кружка'
+      ],
+
+      [
+        'img/ostanovka.png',
+        'Сувенир — остановка'
+      ],
+
+      [
+        'img/telefon.png',
+        'Сувенир — телефон'
+      ],
+
+      [
+        'img/book.png',
+        'Сувенир — книга'
+      ]
+
     ]
+
   },
+
 
   'Брест': {
-    street: 'img/brest-street.png',
-    streetAlt: 'Брест — городская среда',
-    transport: 'img/brest-transport.png',
-    transportAlt: 'Брест — транспорт',
+
+    street:
+      'img/brest-street.png',
+
+    streetAlt:
+      'Брест — городская среда',
+
+    transport:
+      'img/brest-transport.png',
+
+    transportAlt:
+      'Брест — транспорт',
+
     navigation: [
-      ['img/brest-city-ukazatel.png', 'Брест — городской указатель'],
-      ['img/brest-ford-ukazatel.png', 'Брест — навигационный указатель']
+
+      [
+        'img/brest-city-ukazatel.png',
+        'Брест — городской указатель'
+      ],
+
+      [
+        'img/brest-ford-ukazatel.png',
+        'Брест — навигационный указатель'
+      ]
+
     ],
+
     souvenirs: [
-      ['img/brest-suvenir1.png', 'Брест — сувенир 1'],
-      ['img/brest-suvenir2.png', 'Брест — сувенир 2'],
-      ['img/brest-suvenir3.png', 'Брест — сувенир 3'],
-      ['img/brest-suvenir4.png', 'Брест — сувенир 4']
+
+      [
+        'img/brest-suvenir1.png',
+        'Брест — сувенир 1'
+      ],
+
+      [
+        'img/brest-suvenir2.png',
+        'Брест — сувенир 2'
+      ],
+
+      [
+        'img/brest-suvenir3.png',
+        'Брест — сувенир 3'
+      ],
+
+      [
+        'img/brest-suvenir4.png',
+        'Брест — сувенир 4'
+      ]
+
     ]
+
   },
+
 
   'Гродно': {
-    street: 'img/grodno-street.png',
-    streetAlt: 'Гродно — городская среда',
-    transport: 'img/grodno-transport.png',
-    transportAlt: 'Гродно — транспорт',
+
+    street:
+      'img/grodno-street.png',
+
+    streetAlt:
+      'Гродно — городская среда',
+
+    transport:
+      'img/grodno-transport.png',
+
+    transportAlt:
+      'Гродно — транспорт',
+
     navigation: [
-      ['img/grodno-city-ukazatel.png', 'Гродно — городской указатель'],
-      ['img/grodno-river-ukazatel.png', 'Гродно — указатель к реке']
+
+      [
+        'img/grodno-city-ukazatel.png',
+        'Гродно — городской указатель'
+      ],
+
+      [
+        'img/grodno-river-ukazatel.png',
+        'Гродно — указатель к реке'
+      ]
+
     ],
+
     souvenirs: [
-      ['img/grodno-suvenir1.png', 'Гродно — сувенир 1'],
-      ['img/grodno-suvenir2.png', 'Гродно — сувенир 2'],
-      ['img/grodno-suvenir3.png', 'Гродно — сувенир 3'],
-      ['img/grodno-suvenir4.png', 'Гродно — сувенир 4']
+
+      [
+        'img/grodno-suvenir1.png',
+        'Гродно — сувенир 1'
+      ],
+
+      [
+        'img/grodno-suvenir2.png',
+        'Гродно — сувенир 2'
+      ],
+
+      [
+        'img/grodno-suvenir3.png',
+        'Гродно — сувенир 3'
+      ],
+
+      [
+        'img/grodno-suvenir4.png',
+        'Гродно — сувенир 4'
+      ]
+
     ]
+
   },
 
+
   'Витебск': {
-    street: 'img/vitebsk-street.png',
-    streetAlt: 'Витебск — городская среда',
-    transport: 'img/vitebsk-transport.png',
-    transportAlt: 'Витебск — транспорт',
+
+    street:
+      'img/vitebsk-street.png',
+
+    streetAlt:
+      'Витебск — городская среда',
+
+    transport:
+      'img/vitebsk-transport.png',
+
+    transportAlt:
+      'Витебск — транспорт',
+
     navigation: [
-      ['img/vitebsk-city-ukazatel.png', 'Витебск — городской указатель'],
-      ['img/vitebsk-river-ukazatel.png', 'Витебск — указатель к реке']
+
+      [
+        'img/vitebsk-city-ukazatel.png',
+        'Витебск — городской указатель'
+      ],
+
+      [
+        'img/vitebsk-river-ukazatel.png',
+        'Витебск — указатель к реке'
+      ]
+
     ],
+
     souvenirs: [
-      ['img/vitebsk-suvenir1.png', 'Витебск — сувенир 1'],
-      ['img/vitebsk-suvenir2.png', 'Витебск — сувенир 2'],
-      ['img/vitebsk-suvenir3.png', 'Витебск — сувенир 3'],
-      ['img/vitebsk-suvenir4.png', 'Витебск — сувенир 4']
+
+      [
+        'img/vitebsk-suvenir1.png',
+        'Витебск — сувенир 1'
+      ],
+
+      [
+        'img/vitebsk-suvenir2.png',
+        'Витебск — сувенир 2'
+      ],
+
+      [
+        'img/vitebsk-suvenir3.png',
+        'Витебск — сувенир 3'
+      ],
+
+      [
+        'img/vitebsk-suvenir4.png',
+        'Витебск — сувенир 4'
+      ]
+
     ]
+
   }
+
 };
 
-function renderCity(city) {
+
+function renderCity(city){
+
   const data = cityData[city];
-  if (!data) return;
+
+  if(!data) return;
 
   sceneCity.textContent = city;
 
-  streetImage.src = data.street;
-  streetImage.alt = data.streetAlt;
-  streetImage.dataset.fullscreen = data.street;
 
-  transportImage.src = data.transport;
-  transportImage.alt = data.transportAlt;
-  transportImage.dataset.fullscreen = data.transport;
+  streetImage.src =
+    data.street;
 
-  navigationGallery.innerHTML = data.navigation.map(([src, alt]) => `
-    <div class="navigation-item">
-      <img
-        class="fullscreen-click"
-        src="${src}"
-        alt="${alt}"
-        data-fullscreen="${src}"
-      >
-    </div>
-  `).join('');
+  streetImage.alt =
+    data.streetAlt;
 
-  souvenirGallery.innerHTML = data.souvenirs.map(([src, alt]) => `
-    <div class="souvenir-item">
-      <img
-        class="fullscreen-click"
-        src="${src}"
-        alt="${alt}"
-        data-fullscreen="${src}"
-      >
-    </div>
-  `).join('');
+  streetImage.dataset.fullscreen =
+    data.street;
+
+
+  transportImage.src =
+    data.transport;
+
+  transportImage.alt =
+    data.transportAlt;
+
+  transportImage.dataset.fullscreen =
+    data.transport;
+
+
+  navigationGallery.innerHTML =
+    data.navigation.map(([src,alt]) => `
+
+      <div class="navigation-item">
+
+        <img
+          class="fullscreen-click"
+          src="${src}"
+          alt="${alt}"
+          data-fullscreen="${src}"
+        >
+
+      </div>
+
+    `).join('');
+
+
+  souvenirGallery.innerHTML =
+    data.souvenirs.map(([src,alt]) => `
+
+      <div class="souvenir-item">
+
+        <img
+          class="fullscreen-click"
+          src="${src}"
+          alt="${alt}"
+          data-fullscreen="${src}"
+        >
+
+      </div>
+
+    `).join('');
+
 }
 
+
 cityButtons.forEach(button => {
+
   button.addEventListener('click', () => {
-    cityButtons.forEach(item => item.classList.remove('active'));
+
+    cityButtons.forEach(item =>
+      item.classList.remove('active')
+    );
+
     button.classList.add('active');
+
     renderCity(button.dataset.city);
+
   });
+
 });
 
+
 /* Загружаем Минск сразу при открытии сайта */
+
 renderCity('Минск');
 
 
@@ -2223,35 +2688,71 @@ renderCity('Минск');
    MODE SWITCH
 ========================= */
 
-const modeButtons = document.querySelectorAll('.mode-btn');
-const scene = document.getElementById('cityScene');
-const sceneMode = document.getElementById('sceneMode');
+const modeButtons =
+  document.querySelectorAll('.mode-btn');
+
+const scene =
+  document.getElementById('cityScene');
+
+const sceneMode =
+  document.getElementById('sceneMode');
+
 
 const modeNames = {
-  street:'Городская среда',
-  transport:'Движение города',
-  navigation:'Путь к впечатлениям',
-  souvenir:'Бренд с собой'
+
+  street:
+    'Городская среда',
+
+  transport:
+    'Движение города',
+
+  navigation:
+    'Путь к впечатлениям',
+
+  souvenir:
+    'Бренд с собой'
+
 };
 
+
 modeButtons.forEach(button => {
+
   button.addEventListener('click', () => {
 
-    modeButtons.forEach(item => item.classList.remove('active'));
-    button.classList.add('active');
-
-    const mode = button.dataset.mode;
-
-    scene.classList.remove(
-      'street-mode',
-      'transport-mode',
-      'navigation-mode',
-      'souvenir-mode'
+    modeButtons.forEach(item =>
+      item.classList.remove('active')
     );
 
-    scene.classList.add(mode + '-mode');
-    sceneMode.textContent = modeNames[mode];
+    button.classList.add('active');
+
+
+    const mode =
+      button.dataset.mode;
+
+
+    scene.classList.remove(
+
+      'street-mode',
+
+      'transport-mode',
+
+      'navigation-mode',
+
+      'souvenir-mode'
+
+    );
+
+
+    scene.classList.add(
+      mode + '-mode'
+    );
+
+
+    sceneMode.textContent =
+      modeNames[mode];
+
   });
+
 });
 
 
@@ -2259,50 +2760,111 @@ modeButtons.forEach(button => {
    FULLSCREEN IMAGE VIEWER
 ========================= */
 
-const lightbox = document.getElementById('imageLightbox');
-const lightboxImage = document.getElementById('lightboxImage');
-const lightboxClose = document.getElementById('lightboxClose');
+const lightbox =
+  document.getElementById('imageLightbox');
 
-function openLightbox(src, alt = '') {
+const lightboxImage =
+  document.getElementById('lightboxImage');
+
+const lightboxClose =
+  document.getElementById('lightboxClose');
+
+
+function openLightbox(src,alt = ''){
+
   lightboxImage.src = src;
+
   lightboxImage.alt = alt;
+
   lightbox.classList.add('open');
-  lightbox.setAttribute('aria-hidden', 'false');
-  document.body.style.overflow = 'hidden';
+
+  lightbox.setAttribute(
+    'aria-hidden',
+    'false'
+  );
+
+  document.body.style.overflow =
+    'hidden';
+
 }
 
-function closeLightbox() {
+
+function closeLightbox(){
+
   lightbox.classList.remove('open');
-  lightbox.setAttribute('aria-hidden', 'true');
+
+  lightbox.setAttribute(
+    'aria-hidden',
+    'true'
+  );
+
   lightboxImage.src = '';
-  document.body.style.overflow = '';
+
+  document.body.style.overflow =
+    '';
+
 }
+
 
 /* Делегирование клика — работает и для картинок,
    которые подгружаются после переключения города */
-document.addEventListener('click', event => {
-  const image = event.target.closest('.fullscreen-click');
-  if (!image) return;
+
+document.addEventListener('click',event => {
+
+  const image =
+    event.target.closest('.fullscreen-click');
+
+  if(!image) return;
+
 
   openLightbox(
-    image.dataset.fullscreen || image.currentSrc || image.src,
+
+    image.dataset.fullscreen ||
+    image.currentSrc ||
+    image.src,
+
     image.alt
+
   );
+
 });
 
-lightboxClose.addEventListener('click', closeLightbox);
 
-lightbox.addEventListener('click', event => {
-  if (event.target === lightbox) {
-    closeLightbox();
+lightboxClose.addEventListener(
+  'click',
+  closeLightbox
+);
+
+
+lightbox.addEventListener(
+  'click',
+  event => {
+
+    if(event.target === lightbox){
+
+      closeLightbox();
+
+    }
+
   }
-});
+);
 
-document.addEventListener('keydown', event => {
-  if (event.key === 'Escape' && lightbox.classList.contains('open')) {
-    closeLightbox();
+
+document.addEventListener(
+  'keydown',
+  event => {
+
+    if(
+      event.key === 'Escape' &&
+      lightbox.classList.contains('open')
+    ){
+
+      closeLightbox();
+
+    }
+
   }
-});
+);
 
 
 /* =========================
@@ -2312,28 +2874,37 @@ document.addEventListener('keydown', event => {
 const revealElements =
   document.querySelectorAll('.reveal');
 
+
 const observer =
   new IntersectionObserver(
+
     entries => {
 
       entries.forEach(entry => {
 
         if(entry.isIntersecting){
 
-          entry.target.classList.add('visible');
+          entry.target.classList.add(
+            'visible'
+          );
 
         }
 
       });
 
     },
+
     {
       threshold:.12
     }
+
   );
 
+
 revealElements.forEach(element => {
+
   observer.observe(element);
+
 });
 
 
@@ -2346,7 +2917,11 @@ setTimeout(() => {
   document
     .querySelectorAll('.hero .reveal')
     .forEach(element => {
-      element.classList.add('visible');
+
+      element.classList.add(
+        'visible'
+      );
+
     });
 
 },150);
@@ -2355,12 +2930,23 @@ setTimeout(() => {
 
 
 <div class="image-rights-note">
-  <strong>Об использовании изображений</strong>
-  Изображения на сайте используются преимущественно в демонстрационных целях —
+
+  <strong>
+    Об использовании изображений
+  </strong>
+
+  Изображения на сайте используются преимущественно
+  в демонстрационных целях —
   для визуализации концепции туристического бренда Беларуси.
-  Авторские права на оригинальные материалы принадлежат их авторам и правообладателям.
-  Материалы могут быть заменены на изображения, предоставленные с соответствующим разрешением.
+
+  Авторские права на оригинальные материалы принадлежат
+  их авторам и правообладателям.
+
+  Материалы могут быть заменены на изображения,
+  предоставленные с соответствующим разрешением.
+
 </div>
+
 
 </body>
 </html>
