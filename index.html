@@ -902,6 +902,65 @@ section{
 @media(max-width:700px){
   .photo-grid{
     grid-template-columns:1fr;
+    gap:22px;
+  }
+
+  /* На телефоне сохраняем исходные пропорции фотографий,
+     чтобы важные детали не обрезались. */
+  .photo-card{
+    min-height:0;
+    height:auto;
+    border-radius:26px;
+  }
+
+  .photo-placeholder{
+    height:auto;
+    min-height:0;
+    padding:0;
+    display:block;
+    background:transparent;
+  }
+
+  .photo-placeholder img{
+    display:block;
+    width:100%;
+    height:auto;
+    min-height:0;
+    object-fit:initial;
+  }
+
+  .brand-overlay{
+    inset:0;
+    background:linear-gradient(
+      to top,
+      rgba(9,43,67,.82) 0%,
+      rgba(9,43,67,.18) 38%,
+      transparent 62%
+    );
+  }
+
+  .brand-overlay img{
+    width:118px;
+    max-height:58px;
+    left:18px;
+    top:16px;
+  }
+
+  .photo-caption{
+    left:20px;
+    right:20px;
+    bottom:18px;
+  }
+
+  .photo-caption strong{
+    font-size:25px;
+    margin-bottom:6px;
+  }
+
+  .photo-caption span{
+    display:block;
+    font-size:13px;
+    line-height:1.45;
   }
 }
 
