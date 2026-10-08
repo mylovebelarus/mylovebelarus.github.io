@@ -1473,57 +1473,29 @@ footer{
         <small id="sceneMode">Городская среда</small>
       </div>
 
-      <!-- Улица: клик по изображению открывает его на весь экран -->
+      <!-- Улица -->
       <img
+        id="streetImage"
         class="street-image fullscreen-click"
         src="img/minsk3.png"
         alt="Минск — городская среда"
         data-fullscreen="img/minsk3.png"
       >
 
-      <!-- Транспорт: без анимации, клик открывает изображение на весь экран -->
+      <!-- Транспорт -->
       <img
+        id="transportImage"
         class="transport-image fullscreen-click"
         src="img/tramvay.png"
-        alt="Минский трамвай"
+        alt="Минский транспорт"
         data-fullscreen="img/tramvay.png"
       >
 
       <!-- Навигация -->
-      <div class="navigation-gallery">
-        <div class="navigation-item">
-          <img
-            class="fullscreen-click"
-            src="img/ukazatelCity.png"
-            alt="Указатель города"
-            data-fullscreen="img/ukazatelCity.png"
-          >
-        </div>
-        <div class="navigation-item">
-          <img
-            class="fullscreen-click"
-            src="img/ukazatelLake.png"
-            alt="Указатель к озеру"
-            data-fullscreen="img/ukazatelLake.png"
-          >
-        </div>
-      </div>
+      <div class="navigation-gallery" id="navigationGallery"></div>
 
       <!-- Сувениры -->
-      <div class="souvenir-gallery">
-        <div class="souvenir-item">
-          <img class="fullscreen-click" src="img/kruska.png" alt="Сувенир — кружка" data-fullscreen="img/kruska.png">
-        </div>
-        <div class="souvenir-item">
-          <img class="fullscreen-click" src="img/ostanovka.png" alt="Сувенир — остановка" data-fullscreen="img/ostanovka.png">
-        </div>
-        <div class="souvenir-item">
-          <img class="fullscreen-click" src="img/telefon.png" alt="Сувенир — телефон" data-fullscreen="img/telefon.png">
-        </div>
-        <div class="souvenir-item">
-          <img class="fullscreen-click" src="img/book.png" alt="Сувенир — книга" data-fullscreen="img/book.png">
-        </div>
-      </div>
+      <div class="souvenir-gallery" id="souvenirGallery"></div>
 
     </div>
 
@@ -1918,22 +1890,129 @@ footer{
 
 const cityButtons = document.querySelectorAll('.city-btn');
 const sceneCity = document.getElementById('sceneCity');
+const streetImage = document.getElementById('streetImage');
+const transportImage = document.getElementById('transportImage');
+const navigationGallery = document.getElementById('navigationGallery');
+const souvenirGallery = document.getElementById('souvenirGallery');
+
+/* Все изображения городов, которые лежат в папке img */
+const cityData = {
+  'Минск': {
+    street: 'img/minsk3.png',
+    streetAlt: 'Минск — городская среда',
+    transport: 'img/tramvay.png',
+    transportAlt: 'Минский транспорт',
+    navigation: [
+      ['img/ukazatelCity.png', 'Указатель города'],
+      ['img/ukazatelLake.png', 'Указатель к озеру']
+    ],
+    souvenirs: [
+      ['img/kruska.png', 'Сувенир — кружка'],
+      ['img/ostanovka.png', 'Сувенир — остановка'],
+      ['img/telefon.png', 'Сувенир — телефон'],
+      ['img/book.png', 'Сувенир — книга']
+    ]
+  },
+
+  'Брест': {
+    street: 'img/brest-street.png',
+    streetAlt: 'Брест — городская среда',
+    transport: 'img/brest-transport.png',
+    transportAlt: 'Брест — транспорт',
+    navigation: [
+      ['img/brest-city-ukazatel.png', 'Брест — городской указатель'],
+      ['img/brest-ford-ukazatel.png', 'Брест — навигационный указатель']
+    ],
+    souvenirs: [
+      ['img/brest-suvenir1.png', 'Брест — сувенир 1'],
+      ['img/brest-suvenir2.png', 'Брест — сувенир 2'],
+      ['img/brest-suvenir3.png', 'Брест — сувенир 3'],
+      ['img/brest-suvenir4.png', 'Брест — сувенир 4']
+    ]
+  },
+
+  'Гродно': {
+    street: 'img/grodno-street.png',
+    streetAlt: 'Гродно — городская среда',
+    transport: 'img/grodno-transport.png',
+    transportAlt: 'Гродно — транспорт',
+    navigation: [
+      ['img/grodno-city-ukazatel.png', 'Гродно — городской указатель'],
+      ['img/grodno-river-ukazatel.png', 'Гродно — указатель к реке']
+    ],
+    souvenirs: [
+      ['img/grodno-suvenir1.png', 'Гродно — сувенир 1'],
+      ['img/grodno-suvenir2.png', 'Гродно — сувенир 2'],
+      ['img/grodno-suvenir3.png', 'Гродно — сувенир 3'],
+      ['img/grodno-suvenir4.png', 'Гродно — сувенир 4']
+    ]
+  },
+
+  'Витебск': {
+    street: 'img/vitebsk-street.png',
+    streetAlt: 'Витебск — городская среда',
+    transport: 'img/vitebsk-transport.png',
+    transportAlt: 'Витебск — транспорт',
+    navigation: [
+      ['img/vitebsk-city-ukazatel.png', 'Витебск — городской указатель'],
+      ['img/vitebsk-river-ukazatel.png', 'Витебск — указатель к реке']
+    ],
+    souvenirs: [
+      ['img/vitebsk-suvenir1.png', 'Витебск — сувенир 1'],
+      ['img/vitebsk-suvenir2.png', 'Витебск — сувенир 2'],
+      ['img/vitebsk-suvenir3.png', 'Витебск — сувенир 3'],
+      ['img/vitebsk-suvenir4.png', 'Витебск — сувенир 4']
+    ]
+  }
+};
+
+function renderCity(city) {
+  const data = cityData[city];
+  if (!data) return;
+
+  sceneCity.textContent = city;
+
+  streetImage.src = data.street;
+  streetImage.alt = data.streetAlt;
+  streetImage.dataset.fullscreen = data.street;
+
+  transportImage.src = data.transport;
+  transportImage.alt = data.transportAlt;
+  transportImage.dataset.fullscreen = data.transport;
+
+  navigationGallery.innerHTML = data.navigation.map(([src, alt]) => `
+    <div class="navigation-item">
+      <img
+        class="fullscreen-click"
+        src="${src}"
+        alt="${alt}"
+        data-fullscreen="${src}"
+      >
+    </div>
+  `).join('');
+
+  souvenirGallery.innerHTML = data.souvenirs.map(([src, alt]) => `
+    <div class="souvenir-item">
+      <img
+        class="fullscreen-click"
+        src="${src}"
+        alt="${alt}"
+        data-fullscreen="${src}"
+      >
+    </div>
+  `).join('');
+}
 
 cityButtons.forEach(button => {
-
   button.addEventListener('click', () => {
-
-    cityButtons.forEach(item => {
-      item.classList.remove('active');
-    });
-
+    cityButtons.forEach(item => item.classList.remove('active'));
     button.classList.add('active');
-
-    sceneCity.textContent = button.dataset.city;
-
+    renderCity(button.dataset.city);
   });
-
 });
+
+/* Загружаем Минск сразу при открытии сайта */
+renderCity('Минск');
 
 
 /* =========================
@@ -1995,13 +2074,16 @@ function closeLightbox() {
   document.body.style.overflow = '';
 }
 
-document.querySelectorAll('.fullscreen-click').forEach(image => {
-  image.addEventListener('click', () => {
-    openLightbox(
-      image.dataset.fullscreen || image.currentSrc || image.src,
-      image.alt
-    );
-  });
+/* Делегирование клика — работает и для картинок,
+   которые подгружаются после переключения города */
+document.addEventListener('click', event => {
+  const image = event.target.closest('.fullscreen-click');
+  if (!image) return;
+
+  openLightbox(
+    image.dataset.fullscreen || image.currentSrc || image.src,
+    image.alt
+  );
 });
 
 lightboxClose.addEventListener('click', closeLightbox);
