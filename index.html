@@ -1306,6 +1306,119 @@ footer{
   }
 }
 
+
+/* ===== Весёлый верхний блок: маршрут по Беларуси ===== */
+.hero{
+  min-height:calc(100vh - 82px);
+  background:
+    radial-gradient(circle at 90% 12%,rgba(8,119,209,.18),transparent 25%),
+    radial-gradient(circle at 8% 88%,rgba(7,148,71,.16),transparent 30%),
+    linear-gradient(135deg,#ffffff 0%,#f2fbf7 52%,#eaf7ff 100%);
+}
+
+.hero::before{
+  content:"";
+  position:absolute;
+  left:-5%;
+  right:-5%;
+  bottom:18px;
+  height:70px;
+  background:
+    repeating-linear-gradient(90deg,
+      transparent 0 55px,
+      rgba(7,148,71,.10) 55px 58px,
+      transparent 58px 115px);
+  transform:skewY(-2deg);
+  pointer-events:none;
+}
+
+.hero-trip{
+  display:flex;
+  flex-wrap:wrap;
+  gap:9px;
+  margin-top:25px;
+}
+
+.hero-trip span{
+  display:inline-flex;
+  align-items:center;
+  gap:6px;
+  padding:9px 13px;
+  border-radius:999px;
+  background:rgba(255,255,255,.82);
+  border:1px solid rgba(7,148,71,.13);
+  color:#4d6878;
+  font-size:11px;
+  font-weight:800;
+  box-shadow:0 7px 20px rgba(9,43,67,.06);
+  transition:.25s;
+}
+
+.hero-trip span:hover{
+  transform:translateY(-3px) rotate(-1deg);
+  border-color:var(--green);
+}
+
+.hero-journey{
+  position:absolute;
+  left:8%;
+  right:8%;
+  bottom:42px;
+  height:2px;
+  background:linear-gradient(90deg,transparent,var(--green),var(--blue),transparent);
+  opacity:.22;
+}
+
+.hero-journey::before,
+.hero-journey::after{
+  content:"";
+  position:absolute;
+  top:50%;
+  width:11px;
+  height:11px;
+  border-radius:50%;
+  background:white;
+  border:3px solid var(--green);
+  transform:translateY(-50%);
+}
+
+.hero-journey::before{left:18%}
+.hero-journey::after{right:18%;border-color:var(--blue)}
+
+.hero-sticker{
+  position:absolute;
+  z-index:5;
+  padding:11px 15px;
+  border-radius:16px;
+  background:white;
+  color:var(--dark);
+  font-size:11px;
+  font-weight:800;
+  box-shadow:0 14px 30px rgba(9,43,67,.12);
+  animation:stickerFloat 4s ease-in-out infinite;
+}
+
+.hero-sticker small{
+  display:block;
+  margin-top:3px;
+  color:#79909b;
+  font-weight:600;
+}
+
+.sticker-heart{top:12%;right:3%;transform:rotate(5deg)}
+.sticker-route{bottom:12%;left:2%;transform:rotate(-4deg);animation-delay:1s}
+
+@keyframes stickerFloat{
+  0%,100%{translate:0 0}
+  50%{translate:0 -7px}
+}
+
+@media(max-width:800px){
+  .hero-trip{justify-content:center}
+  .hero-sticker{display:none}
+  .hero-journey{left:12%;right:12%;bottom:18px}
+}
+
 </style>
 
 <style>
@@ -1444,6 +1557,13 @@ footer{
         объединяются в одном эмоциональном образе —
         <strong>близком к сердцу</strong>.
       </p>
+
+      <div class="hero-trip" aria-label="Куда отправимся">
+        <span>🌲 Природа</span>
+        <span>🏙️ Города</span>
+        <span>🚋 Движение</span>
+        <span>🎁 Сувениры</span>
+      </div>
 
       <div class="hero-buttons">
         <a href="#belarus" class="btn btn-primary">
