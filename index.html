@@ -812,6 +812,82 @@ section{
 }
 
 /* =========================
+   BRAND IN CITY — аккуратная галерея
+========================= */
+
+#brand .photo-grid{
+  margin-top:42px;
+  display:grid;
+  grid-template-columns:repeat(2,minmax(0,1fr));
+  gap:24px;
+}
+
+#brand .photo-card{
+  position:relative;
+  aspect-ratio:16 / 9;
+  min-height:0;
+  border-radius:25px;
+  overflow:hidden;
+  background:#d9e9e1;
+  box-shadow:0 12px 35px rgba(9,43,67,.08);
+}
+
+#brand .photo-placeholder{
+  position:absolute;
+  inset:0;
+  min-height:0;
+  height:100%;
+  padding:0;
+  overflow:hidden;
+  display:block;
+  background:#d9e9e1;
+}
+
+#brand .photo-placeholder img{
+  display:block;
+  width:100%;
+  height:100%;
+  object-fit:cover;
+  object-position:center;
+}
+
+#brand .brand-overlay{
+  position:absolute;
+  inset:0;
+  background:linear-gradient(to top,rgba(9,43,67,.78),rgba(9,43,67,0) 58%);
+}
+
+#brand .brand-overlay img{
+  position:absolute;
+  width:150px;
+  max-height:80px;
+  object-fit:contain;
+  object-position:left center;
+  left:24px;
+  top:24px;
+  filter:drop-shadow(0 5px 8px rgba(0,0,0,.25));
+}
+
+#brand .photo-caption{
+  position:absolute;
+  left:24px;
+  right:24px;
+  bottom:22px;
+  color:white;
+}
+
+@media(max-width:700px){
+  #brand .photo-grid{
+    grid-template-columns:1fr;
+    gap:18px;
+  }
+
+  #brand .photo-card{
+    aspect-ratio:16 / 10;
+  }
+}
+
+/* =========================
    BRAND IN CITY
 ========================= */
 
@@ -902,96 +978,6 @@ section{
 @media(max-width:700px){
   .photo-grid{
     grid-template-columns:1fr;
-  }
-}
-
-
-/* ===== Улучшенная подача блока «Бренд в городе» ===== */
-#brand{
-  background:linear-gradient(180deg,#f3faf7 0%,#eef7f3 100%);
-}
-
-#brand .photo-grid{
-  margin-top:42px;
-  display:grid;
-  grid-template-columns:repeat(2,minmax(0,1fr));
-  gap:26px;
-  max-width:1100px;
-  margin-left:auto;
-  margin-right:auto;
-}
-
-#brand .photo-card{
-  min-height:0;
-  aspect-ratio:16 / 9;
-  border-radius:24px;
-  overflow:hidden;
-  background:#dcebe5;
-  box-shadow:0 16px 36px rgba(9,43,67,.10);
-  transition:transform .28s ease,box-shadow .28s ease;
-}
-
-#brand .photo-card:hover{
-  transform:translateY(-5px);
-  box-shadow:0 22px 42px rgba(9,43,67,.16);
-}
-
-#brand .photo-placeholder{
-  position:absolute;
-  inset:0;
-  min-height:0;
-  padding:0;
-  display:block;
-  background:#dcebe5;
-}
-
-#brand .photo-placeholder img{
-  display:block;
-  width:100%;
-  height:100%;
-  object-fit:cover;
-  object-position:center;
-}
-
-#brand .brand-overlay{
-  background:linear-gradient(180deg,rgba(9,43,67,.03) 28%,rgba(9,43,67,.12) 45%,rgba(9,43,67,.88) 100%);
-}
-
-#brand .brand-overlay img{
-  width:132px;
-  max-height:66px;
-  left:20px;
-  top:18px;
-}
-
-#brand .photo-caption{
-  left:22px;
-  right:22px;
-  bottom:20px;
-}
-
-#brand .photo-caption strong{
-  font-size:24px;
-  line-height:1.1;
-  margin-bottom:7px;
-  text-shadow:0 2px 8px rgba(0,0,0,.18);
-}
-
-#brand .photo-caption span{
-  display:block;
-  max-width:520px;
-  font-size:13px;
-  line-height:1.45;
-  opacity:.94;
-}
-
-@media(max-width:760px){
-  #brand .photo-grid{
-    grid-template-columns:1fr;
-    gap:18px;
-  }
-  #brand .photo-card{
-    aspect-ratio:16 / 10;
   }
 }
 
