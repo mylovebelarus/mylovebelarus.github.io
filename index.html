@@ -842,50 +842,43 @@ section{
 
 #brand{
   background:#f0f7f3;
-  position:relative;
-  isolation:isolate;
 }
 
 .photo-grid{
   margin-top:42px;
   display:grid;
-  grid-template-columns:repeat(2,minmax(0,1fr));
+  grid-template-columns:repeat(2,1fr);
   gap:20px;
-  align-items:start;
 }
 
 .photo-card{
   position:relative;
-  min-width:0;
-  min-height:0;
-  height:auto;
+  min-height:340px;
   border-radius:25px;
   overflow:hidden;
   background:#d9e9e1;
   box-shadow:0 12px 35px rgba(9,43,67,.08);
 }
 
-/* Картинка сохраняет свои пропорции и не обрезается */
-.photo-image,
-.photo-placeholder img{
-  display:block;
+.photo-image{
   width:100%;
-  height:auto;
-  min-height:0;
-  max-height:none;
-  object-fit:contain;
-  object-position:center;
+  height:100%;
+  min-height:340px;
+  object-fit:cover;
+  display:block;
 }
 
 .photo-placeholder{
-  display:block;
-  width:100%;
-  height:auto;
-  min-height:0;
-  padding:0;
-  margin:0;
-  overflow:hidden;
-  background:#d9e9e1;
+  height:100%;
+  min-height:340px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  text-align:center;
+  padding:30px;
+  background:
+    radial-gradient(circle at 20% 20%,rgba(8,119,209,.3),transparent 25%),
+    linear-gradient(135deg,#dff4ff,#cdebdc);
   color:#537080;
   font-size:13px;
   font-weight:700;
@@ -894,8 +887,6 @@ section{
 .brand-overlay{
   position:absolute;
   inset:0;
-  z-index:2;
-  pointer-events:none;
   background:linear-gradient(
     to top,
     rgba(9,43,67,.75),
@@ -906,8 +897,6 @@ section{
 .brand-overlay img{
   position:absolute;
   width:150px;
-  max-width:42%;
-  height:auto;
   max-height:80px;
   object-fit:contain;
   object-position:left center;
@@ -932,53 +921,12 @@ section{
 
 .photo-caption span{
   font-size:12px;
-  opacity:.95;
+  opacity:.85;
 }
 
 @media(max-width:700px){
-  #brand{
-    padding-top:clamp(36px,8vw,60px);
-  }
-
-  #brand .photo-grid{
-    grid-template-columns:minmax(0,1fr);
-    gap:20px;
-    margin-top:28px;
-  }
-
-  #brand .photo-card{
-    width:100%;
-    min-height:0;
-    border-radius:16px;
-  }
-
-  #brand .photo-placeholder,
-  #brand .photo-placeholder img{
-    height:auto;
-    min-height:0;
-  }
-
-  #brand .brand-overlay img{
-    width:115px;
-    max-width:40%;
-    max-height:60px;
-    left:14px;
-    top:14px;
-  }
-
-  #brand .photo-caption{
-    left:14px;
-    right:14px;
-    bottom:14px;
-  }
-
-  #brand .photo-caption strong{
-    font-size:18px;
-  }
-
-  #brand .photo-caption span{
-    font-size:11px;
-    line-height:1.4;
+  .photo-grid{
+    grid-template-columns:1fr;
   }
 }
 
