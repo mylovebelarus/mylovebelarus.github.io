@@ -883,6 +883,11 @@ section{
   font-weight:700;
 }
 
+.photo-placeholder img{
+  max-width: 100%; /* Подстраиваюсь под размер любого контейнера */
+  height: auto; /* Мои пропорции не меняются при изменении размера */
+}
+
 .brand-overlay{
   position:absolute;
   inset:0;
@@ -927,10 +932,6 @@ section{
   .photo-grid{
     grid-template-columns:1fr;
   }
-.img {
-  max-width: 100%; /* Подстраиваюсь под размер любого контейнера */
-  height: auto; /* Мои пропорции не меняются при изменении размера */
-}  
 }
 
 /* =========================
