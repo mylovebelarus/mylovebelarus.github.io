@@ -1499,35 +1499,6 @@ footer{
     padding:7px;
   }
 }
-
-
-<style>
-/* Исправление фотографий в разделе «Бренд в городе» — только телефон */
-@media screen and (max-width: 700px) {
-  #brand .photo-grid {
-    grid-template-columns: minmax(0, 1fr);
-  }
-
-  #brand .photo-card {
-    min-width: 0;
-    width: 100%;
-    box-sizing: border-box;
-  }
-
-  #brand .photo-placeholder {
-    box-sizing: border-box;
-    min-width: 0;
-    width: 100%;
-    padding: 12px;
-    overflow: hidden;
-  }
-
-  #brand .photo-placeholder > img {
-  object-fit: scale-down;    
-  }
-}
-  
-</style>
   
 </style>
 
