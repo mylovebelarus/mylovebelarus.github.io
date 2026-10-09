@@ -1543,7 +1543,53 @@ footer{
     padding:7px;
   }
 }
-  
+
+```css
+/* Исправление наложения фото и шапки сайта */
+
+header {
+  position: relative;
+  z-index: 1000;
+  background: #ffffff;
+}
+
+#brand {
+  position: relative;
+  z-index: 1;
+  padding-top: 70px;
+  scroll-margin-top: 20px;
+}
+
+#brand .photo-grid {
+  position: relative;
+  z-index: 1;
+  margin-top: 42px;
+}
+
+#brand .photo-card {
+  position: relative;
+  z-index: 0;
+  isolation: isolate;
+}
+
+/* На телефонах */
+@media (max-width: 700px) {
+  #brand {
+    padding-top: 45px;
+  }
+
+  #brand .photo-grid {
+    margin-top: 28px;
+    gap: 20px;
+  }
+
+  #brand .photo-card {
+    width: 100%;
+    min-width: 0;
+  }
+}
+```
+        
 </style>
 
 </head>
