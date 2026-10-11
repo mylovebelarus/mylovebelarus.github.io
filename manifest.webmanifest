@@ -1,0 +1,32 @@
+
+
+{
+  "id": "/",
+  "name": "БЕЛАРУСЬ — Блізка да сэрца",
+  "short_name": "БЕЛАРУСЬ",
+  "description": "Открывай Беларусь: города, природу, маршруты и впечатления.",
+  "lang": "ru",
+  "start_url": "/",
+  "scope": "/",
+  "display": "standalone",
+  "orientation": "any",
+  "background_color": "#f2fbf7",
+  "theme_color": "#079447",
+  "icons": [
+    {
+      "src": "/img/logo-square.png",
+      "type": "image/png"
+    },
+    {
+      "src": "/img/icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "/img/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ]
+}
+
